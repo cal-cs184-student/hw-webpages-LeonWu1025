@@ -104,8 +104,6 @@
 		<br>
 
 		<div class="note small">
-			All screenshots below were generated using the viewer <b>'S'</b> hotkey (not OS screenshots), as required.
-			I kept the pixel inspector in a consistent place when comparisons are requested.
 		</div>
 
 		<h2>Overview</h2>
@@ -161,23 +159,24 @@
 
 		<h3>Why supersampling helps</h3>
 		<p>
-			With 1 sample/pixel, an edge pixel is either fully inside or outside ¡ú hard jaggies.
-			With multiple sub-samples, edge pixels can be partially covered (some hit, some miss) and averaging produces smoother edges.
+			With 1 sample/pixel, an edge pixel is either fully inside or outside, which creates hard jagged edges.
+			With multiple sub-samples, edge pixels can be partially covered (some hit, some miss), and averaging those
+			sub-samples produces smoother antialiased edges.
 		</p>
 
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table>
 				<tr>
 					<td>
-						<img src="./images/screenshot_2-17_16-41-58.png" alt="sample rate 1" />
+						<img src="./images/screenshot_2-18_21-0-36.png" alt="sample rate 1" />
 						<figcaption>Sample rate = 1</figcaption>
 					</td>
 					<td>
-						<img src="./images/screenshot_2-17_17-53-58.png" alt="sample rate 4" />
+						<img src="./images/screenshot_2-18_21-0-39.png" alt="sample rate 4" />
 						<figcaption>Sample rate = 4</figcaption>
 					</td>
 					<td>
-						<img src="./images/screenshot_2-17_17-53-59.png" alt="sample rate 16" />
+						<img src="./images/screenshot_2-18_21-0-42.png" alt="sample rate 16" />
 						<figcaption>Sample rate = 16</figcaption>
 					</td>
 				</tr>
@@ -185,23 +184,36 @@
 		</div>
 
 		<p class="small">
-			The higher the sample rate, the more accurate the coverage estimate becomes near thin geometry and sharp corners,
-			so jaggies reduce and edges look more stable/continuous.
+			As the sample rate increases, the rasterizer gets a more accurate estimate of coverage near thin geometry and sharp
+			corners. This reduces jaggies and makes edges look smoother and more stable.
 		</p>
 
 		<h3>Extra Credit: Jittered stratified sampling (optional)</h3>
 		<p>
 			I also tried jittered stratified sampling: still one sample per grid cell, but with a small deterministic random offset
-			inside each cell. Compared to a perfect grid, jitter can reduce structured aliasing patterns on very thin features
-			(artifacts become more noise-like rather than repeating ¡°stair steps¡±).
+			inside each cell. Compared to a perfect grid, jitter can reduce structured aliasing patterns on very thin features,
+			making artifacts look more noise-like instead of repeating stair-step patterns.
 		</p>
 
-		<figure>
-			<img src="./images/screenshot_2-17_17-54-3.png" alt="jittered sampling" />
-			<figcaption>
-				Extra Credit ¡ª jitter vs grid comparison at the same sample rate on thin edges.
-			</figcaption>
-		</figure>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table>
+				<tr>
+					<td>
+						<img src="./images/screenshot_2-18_21-1-45.png" alt="grid supersampling" />
+						<figcaption>Grid supersampling (jitter OFF)</figcaption>
+					</td>
+					<td>
+						<img src="./images/screenshot_2-18_21-2-9.png" alt="jittered supersampling" />
+						<figcaption>Jittered supersampling (jitter ON)</figcaption>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<p class="small">
+			Both images use the same sample rate and view. The jittered version slightly breaks up regular aliasing patterns
+			along thin edges, while the grid version can show more structured sampling artifacts.
+		</p>
 
 		<h2>Task 3: Transforms</h2>
 
